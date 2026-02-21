@@ -12,4 +12,9 @@ fn main() {
     stdin()
         .read_line(&mut user_input)
         .expect("Failed to read the line");
+
+    let user_guess: u32 = user_input
+        .trim()
+        .parse::<u32>()
+        .expect("Failed to convert to u32");
 }
