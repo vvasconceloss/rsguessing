@@ -17,4 +17,9 @@ fn main() {
         .trim()
         .parse::<u32>()
         .expect("Failed to convert to u32");
+
+    match user_guess {
+        1..=5 => {}
+        _ => println!("The number must be between 1 and 5"),
+    }
 }
