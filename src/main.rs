@@ -1,5 +1,20 @@
 use std::io::stdin;
 
+fn check_guess(user_guess: u32, secret_number: u32) {
+    match user_guess {
+        1..=5 => {
+            if user_guess != secret_number {
+                println!("You lose... The number was: {}", secret_number);
+            }
+
+            if user_guess == secret_number {
+                println!("You win! Congratulations!");
+            }
+        }
+        _ => println!("The number must be between 1 and 5"),
+    }
+}
+
 fn main() {
     println!("===================");
     println!("GUESSING THE NUMBER");
@@ -19,16 +34,5 @@ fn main() {
         .parse::<u32>()
         .expect("Failed to convert to u32");
 
-    match user_guess {
-        1..=5 => {
-            if user_guess != secret_number {
-                println!("You lose... The number was: {}", secret_number);
-            }
-
-            if user_guess == secret_number {
-                println!("You win! Congratulations!");
-            }
-        }
-        _ => println!("The number must be between 1 and 5"),
-    }
+    check_guess(user_guess, secret_number);
 }
