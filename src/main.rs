@@ -1,38 +1,46 @@
 use std::io::stdin;
 
-fn check_guess(user_guess: u32, secret_number: u32) {
-    match user_guess {
-        1..=5 => {
-            if user_guess != secret_number {
-                println!("You lose... The number was: {}", secret_number);
-            }
-
-            if user_guess == secret_number {
-                println!("You win! Congratulations!");
-            }
-        }
-        _ => println!("The number must be between 1 and 5"),
-    }
-}
-
 fn main() {
     println!("===================");
     println!("GUESSING THE NUMBER");
     println!("===================");
 
-    let mut user_input = String::new();
+    let mut attempts: u32 = 1;
     let secret_number: u32 = rand::random_range(1..=5);
 
-    println!("Please input your guess: ");
+    loop {
+        let mut user_input = String::new();
 
-    stdin()
-        .read_line(&mut user_input)
-        .expect("Failed to read the line");
+        println!("Please input your guess: ");
 
-    let user_guess: u32 = user_input
-        .trim()
-        .parse::<u32>()
-        .expect("Failed to convert to u32");
+        stdin()
+            .read_line(&mut user_input)
+            .expect("Failed to read the line");
 
-    check_guess(user_guess, secret_number);
+        let user_guess: u32 = user_input
+            .to_string()
+            .trim()
+            .parse()
+            .expect("Failed to convert to u32");
+
+        match user_guess {
+            1..=5 => {
+                if user_guess != secret_number {
+                    if secret_number < user_guess {
+                        println!("Too high!");
+                    } else {
+                        println!("Too low!");
+                    }
+
+                    attempts = attempts + 1;
+                }
+
+                if user_guess == secret_number {
+                    println!("You win! You guessed it in {} attempts", attempts);
+                    break;
+                }
+            }
+            _ => println!("The number must be between 1 and 5"),
+        }
+    }
 }
